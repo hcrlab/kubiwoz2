@@ -51,19 +51,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       setFocus(app.route);
     });
 
-    page('/users', function() {
-      app.route = 'users';
+    page('/lesson/1', function() {
+      app.route = 'firstlesson';
       setFocus(app.route);
     });
 
-    page('/users/:name', function(data) {
-      app.route = 'user-info';
-      app.params = data.params;
+    page('/demo', function() {
+      app.route = 'demo';
       setFocus(app.route);
     });
 
-    page('/contact', function() {
-      app.route = 'contact';
+    page('/questions', function() {
+      app.route = 'questions';
+      setFocus(app.route);
+    });
+
+    page('/emotions', function() {
+      app.route = 'emotions';
       setFocus(app.route);
     });
 

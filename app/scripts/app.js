@@ -34,6 +34,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
     console.log('Our app is ready to rock!');
+    app.submitLogin();
   });
   
   // See https://github.com/Polymer/polymer/issues/1381
@@ -77,5 +78,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.closeDrawer = function() {
     app.$.paperDrawerPanel.closeDrawer();
   };
+  
+  app.params = { 
+    email: 'hcr@cs.uw.edu',
+    password: 'testpass'
+  };
+    
+  // Connect to the firebase and setup the login function
+  var fb = new Firebase('https://hcrkubi.firebaseio.com/');
+  app.submitLogin = function() {
+    console.log('Logging in...');
+
+    fb.authWithPassword(app.params,
+    function (error, authData) {
+      if (error) {
+        console.log('Login Failed!', error);
+      } else {
+        app.authenticated = true;
+        console.log('Authenticated successfully with payload:', authData);
+        
+        fb.once('value', function(snap) {
+            app.devices = snap.val();
+            
+            var names = [];
+
+            for(var key in app.devices) {
+                if(app.devices.hasOwnProperty(key)) {
+                    names.push(key);
+                }
+            }
+            
+            app.set('deviceNames', names);
+        });
+      }
+    });
+  };
+  
+  app.devices = {};  
+  app.deviceNames = [];
 
 })(document);

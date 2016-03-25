@@ -1,0 +1,137 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<dom-module id="woz-button">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      
+      paper-button {
+        margin-bottom: 10px;
+        width: 200px;
+      }
+
+      paper-button.colored {
+        color: #4b2e83;
+      }
+
+      paper-button[raised].colored {
+        background: #4b2e83;
+        color: #d9d9d9;
+      }
+
+      paper-button.colored.good {
+        background: #5CAD5C;
+      }
+
+      paper-button.colored.bad {
+        color: #FF6666;
+      }
+
+      paper-button[raised].colored.good {
+        background: #5CAD5C;
+        color: #f9f9f9;
+      }
+
+      paper-button[raised].colored.bad {
+        background: #FF6666;
+        color: #000000;
+      }
+    </style>
+
+    <iron-meta id="globals"></iron-meta>
+
+    <paper-button raised class="colored {{clazz}}" on-click="response"><content></content></paper-button>
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      var fb = new Firebase('https://hcrkubi.firebaseio.com/');
+      
+      Polymer({
+        is: 'woz-button',
+
+        properties: {
+          emotion: {
+              type: String,
+              value: null
+          },
+          action: {
+              type: String,
+              value: null
+          },
+          say: {
+              type: String,
+              value: null
+          },
+          lan: {
+              type: String,
+              value: 'EN'
+          },
+          sayB: {
+              type: String,
+              value: null
+          },
+          lanB: {
+              type: String,
+              value: 'FR'
+          },
+          imgL: {
+              type: String,
+              value: null
+          },
+          txtL: {
+              type: String,
+              value: null
+          },
+          imgR: {
+              type: String,
+              value: null
+          },
+          txtR: {
+              type: String,
+              value: null
+          },
+          clazz: String,
+        },
+        
+        response: function() {
+          var taskList = [];
+          
+          taskList.push({
+            speech: {
+              text: this.say,
+              language: this.lan
+            },
+            emotion: this.emotion,
+            action: this.action,
+            leftImage: this.imgL,
+            leftText: this.txtL,
+            rightImage: this.imgR,
+            rightText: this.txtR
+          });
+          
+          if(this.sayB != null) {
+            taskList.push({
+              speech: {
+                text: this.sayB,
+                language: this.lanB
+              }
+            });
+          }
+          
+          console.log();
+          
+          fb.child(this.$.globals.byKey('device')).child('response').push({
+            tasks: taskList,
+            handled: false
+          });
+        }
+      });
+    })();
+  </script>
+</dom-module>
