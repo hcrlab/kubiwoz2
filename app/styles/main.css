@@ -16,3 +16,11 @@ body {
 .page-title {
   outline: none;
 }
+
+paper-dropdown-menu {
+    width: 100%;
+}
+
+paper-dropdown-menu label, paper-dropdown-menu input {
+    margin-left: 16px;
+}

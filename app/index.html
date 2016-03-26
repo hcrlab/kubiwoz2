@@ -77,7 +77,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <iron-meta key="device" value="{{selectedDevice}}"></iron-meta>
         
-        <paper-dropdown-menu label="Choose Device" selected-item-label="{{selectedDevice}}">
+        <paper-dropdown-menu label="{{devicesLabel}}" selected-item-label="{{selectedDevice}}">
             <paper-menu class="dropdown-content">
             <template is="dom-repeat" items="{{deviceNames}}" as="device">
                 <paper-item>[[device]]</paper-item>
@@ -123,17 +123,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <span class="space"></span>
 
           <!-- Toolbar icons -->
-          <paper-icon-button icon="refresh"></paper-icon-button>
-          <paper-icon-button icon="search"></paper-icon-button>
+          <!--<paper-icon-button icon="refresh"></paper-icon-button>
+          <paper-icon-button icon="search"></paper-icon-button>-->
 
           <!-- Application name -->
           <div class="middle middle-container">
-            <div class="app-name">Kubi WoZ App</div>
+            <div class="app-name">KubiLingo WoZ App</div>
           </div>
 
           <!-- Application sub title -->
           <div class="bottom bottom-container">
-            <div class="bottom-title">Wizard of Oz App for Controlling the Kubi Language Teacher</div>
+            <div class="bottom-title">Wizard of Oz App for Controlling the KubiLingo Language Teacher</div>
           </div>
         </paper-toolbar>
                 
@@ -143,33 +143,103 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <section data-route="home" tabindex="-1">
               <paper-material elevation="1">
                 <h1 class="page-title focus-target" tabindex="-1">Home</h1>
-                <woz-button emotion="SMILE" action="YAY" say="Hi there! What is your name?">Hello</woz-button>
-                <woz-button say="Nice to meet you! I am Kuubee. I am a language tutor.">Introduce Kubi</woz-button>
-                <woz-button emotion="THINK" say="Would you like to learn some French with me?">Learn French?</woz-button>
+                <p>Some information about this web app...</p>
               </paper-material>
             </section>
 
             <section data-route="firstlesson" tabindex="-1">
-              <paper-material elevation="1">
-                <h1 class="page-title focus-target" tabindex="-1">First Lesson</h1>
+              <paper-material elevation="2">
+                <h1 class="page-title focus-target" tabindex="-1">First Lesson</h1>      
+                <p>Some info about this lesson</p>               
+              </paper-material>
+              
+              <paper-material elevation="2">
+                <h3>Lesson Introduction</h3>
+                <woz-button emotion="SMILE" action="YAY" say="Hi there! What is your name?">Hello</woz-button>
+                <woz-button say="Nice to meet you! I am Kuubee. I am a language tutor.">Introduce Kubi</woz-button>
+                <woz-button emotion="THINK" say="Would you like to learn some French with me?">Learn French?</woz-button>                     
+              </paper-material>
+                
+              <paper-material elevation="2">
+                <h3>Lesson Introduction</h3>
+                <woz-button emotion="LOOK_LEFT" say="This is your first lesson in French. In this lesson, you will learn a few new words.">Introduce lesson</woz-button>
+                <woz-button imgL="FRANCE" txtL="Example Card" say="I will start with showing you a few pictures and ask you to pick one">Activity Intro</woz-button>
+                <woz-button imgR="FRANCE" txtR="Exemple de Carte" emotion="LOOK_RIGHT" say="Sometimes, they will be in English, and somethings they will be in French">Activity Intro</woz-button>
+                <woz-button action="LOWER_HANDS" emotion="THINK" say="Are you ready?">Activity Intro</woz-button>                     
+              </paper-material>
+                
+              <paper-material elevation="2">
+                <h3>Show An Apple</h3>
+                <woz-button  say="Please tap on a picture of an apple"
+                                txtL="Une pomme" imgL="APPLE"
+                                txtR="Une banane" imgR="BANANA">
+                    Select an apple
+                </woz-button>                        
+              </paper-material>
+              
+              <paper-material elevation="2">
+                <p>Still a lot more to add here...</p>                        
               </paper-material>
             </section>
 
             <section data-route="demo" tabindex="-1">
               <paper-material elevation="1">
                 <h1 class="page-title focus-target" tabindex="-1">Demo</h1>
+                <div>
+                    <!-- Note the {{function}} syntax for connecting this button to a callback, see app.js -->
+                    <woz-button action="NOD" say="Yes">YES</woz-button>
+                    <woz-button action="SHAKE" say="No">NO</woz-button>
+                    <woz-button action="LOOK_AROUND">LOOK AROUND</woz-button>
+                    <woz-button action="SLEEP" emotion="SLEEP">SLEEP</woz-button>
+                    <woz-button action="WAKE" emotion="WAKE">WAKE</woz-button>
+                    <woz-button say="hello">HELLO</woz-button>
+                    <woz-button say="what is your name">What is your name?</woz-button>
+                    <woz-button emotion="SMILE" say="It is nice to meet you">It is nice to meet you!</woz-button>
+                    <woz-button say="How are you doing today">How are you doing today?</woz-button>
+                    <woz-button say="I am Kubi. I'm a language tutor. I can teach French">Self Intro</woz-button>
+                    <woz-button say="Would you like to learn some new words today">Would you like to learn ...?</woz-button>
+                    <woz-button say="I will start with showing you a few pictures and ask you to pick one">Activity Intro</woz-button>
+                </div>
               </paper-material>
             </section>
 
             <section data-route="questions" tabindex="-1">
               <paper-material elevation="1">
                 <h1 class="page-title focus-target" tabindex="-1">Questions</h1>
+                <div>
+                    <woz-button say="Do you need a hint?">Hint</woz-button>
+                    <woz-button say="Do you want to review?">Review</woz-button>
+                    <woz-button say="Are you there?">Are you there?</woz-button>
+                </div>
               </paper-material>
             </section>
 
             <section data-route="emotions" tabindex="-1">
               <paper-material elevation="1">
                 <h1 class="page-title focus-target" tabindex="-1">Emotions</h1>
+                <div>
+                    <woz-button emotion="SMILE">Smile</woz-button>
+                    <woz-button emotion="WINK">Wink</woz-button>
+                    <woz-button emotion="BLINK">Blink</woz-button>
+                </div>
+                <div>
+                    <woz-button emotion="GIGGLE">Giggle</woz-button>
+                    <woz-button emotion="GLARE">Glare</woz-button>
+                    <woz-button emotion="SLEEP">Sleep</woz-button>
+                </div>
+                <div>
+                    <woz-button emotion="WAKE">Wake</woz-button>
+                    <woz-button emotion="SURPRISED">Surprised</woz-button>
+                    <woz-button emotion="THINK">Think</woz-button>
+                </div>
+                <div>
+                    <woz-button emotion="GUILTY">Guilty</woz-button>
+                    <woz-button emotion="LOOK_LEFT">Look Left</woz-button>
+                    <woz-button emotion="LOOK_RIGHT">Look Right</woz-button>
+                </div>
+                <div>
+                    <woz-button emotion="NBLINK">N Blink</woz-button>
+                </div>
               </paper-material>
             </section>
           </iron-pages>

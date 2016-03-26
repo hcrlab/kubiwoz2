@@ -104,8 +104,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             for(var key in app.devices) {
                 if(app.devices.hasOwnProperty(key)) {
-                    names.push(key);
+                    if(app.devices[key].connected) {
+                      names.push(key);
+                    }
                 }
+            }
+            
+            if(names.length === 0) {
+                app.devicesLabel = "No devices online!";
             }
             
             app.set('deviceNames', names);
@@ -114,6 +120,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
   };
   
+  app.devicesLabel = "Choose a device...";
   app.devices = {};  
   app.deviceNames = [];
 

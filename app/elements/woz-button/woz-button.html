@@ -39,11 +39,18 @@
         background: #FF6666;
         color: #000000;
       }
+      
+      #warning {
+          --paper-toast-color: #FF6666;
+      }
     </style>
 
+    <paper-toast id="warning"></paper-toast>
+    <paper-toast id="success"></paper-toast>
+    
     <iron-meta id="globals"></iron-meta>
 
-    <paper-button raised class="colored {{clazz}}" on-click="response"><content></content></paper-button>
+    <paper-button raised class="colored" on-click="response"><content></content></paper-button>
   </template>
 
   <script>
@@ -96,40 +103,57 @@
               type: String,
               value: null
           },
-          clazz: String,
+          clazz: String
+        },
+        
+        _deviceSelected: function() {
+          var device = this.$.globals.byKey('device');
+          console.log(device);
+          return device && device.length > 0;
         },
         
         response: function() {
-          var taskList = [];
+          var device = this.$.globals.byKey('device');
           
-          taskList.push({
-            speech: {
-              text: this.say,
-              language: this.lan
-            },
-            emotion: this.emotion,
-            action: this.action,
-            leftImage: this.imgL,
-            leftText: this.txtL,
-            rightImage: this.imgR,
-            rightText: this.txtR
-          });
-          
-          if(this.sayB != null) {
+          if(this._deviceSelected()) {
+            var taskList = [];
+            
             taskList.push({
               speech: {
-                text: this.sayB,
-                language: this.lanB
-              }
+                text: this.say,
+                language: this.lan
+              },
+              emotion: this.emotion,
+              action: this.action,
+              leftImage: this.imgL,
+              leftText: this.txtL,
+              rightImage: this.imgR,
+              rightText: this.txtR
             });
+            
+            if(this.sayB != null) {
+              taskList.push({
+                speech: {
+                  text: this.sayB,
+                  language: this.lanB
+                }
+              });
+            }
+            
+            fb.child(device).child('response').push({
+              tasks: taskList,
+              handled: false
+            }, function(error) {
+                if(error) {
+                    this.$.warning.show({text: error, duration: 3000});
+                } else {
+                    this.$.success.show({text: 'Command sent!', duration: 2000});
+                }
+            }.bind(this));
+          } else {
+            console.error('No device selected!');
+            this.$.warning.show({text: 'No Device Selected!', duration: 3000});
           }
-          
-          console.log();
-          
-          fb.child(this.$.globals.byKey('device')).child('response').push({
-            tasks: taskList,
-            handled: false
-          });
         }
       });
     })();
